@@ -33,10 +33,9 @@ export interface IOrderRequest extends IBuyer {
     items: string[];
 }
 
-export type IOrder = Omit<IBuyer, "payment"> & {
-  payment: TPayment;
-  items: string[];
-  total: number;
+export interface IOrder extends IBuyer {
+     total: number,
+     items: string[]
 }
 
 export interface IValidationErrors {
