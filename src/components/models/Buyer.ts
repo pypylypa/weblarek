@@ -1,4 +1,5 @@
 import { IBuyer, TPayment } from '../../types';
+import { EventEmitter } from '../base/Events';
 
 export class Buyer {
   private _payment: TPayment | null = null;
@@ -6,6 +7,8 @@ export class Buyer {
   private _email: string = '';
   private _phone: string = '';
   
+  constructor(private events: EventEmitter) {}
+
   setBuyerNotis(data: IBuyer): void {
     this._payment = data.payment;
     this._address = data.address;
@@ -13,20 +16,24 @@ export class Buyer {
     this._phone = data.phone;
   }
 
-  set payment(value: TPayment) {
-    this._payment = value;
+  setPayment(payment: TPayment): void {
+    this._payment = payment;
+    this.events.emit('buyer:changed', { field: 'payment' });
   }
 
-  set address(value: string) {
-    this._address = value;
+  setAddress(address: string): void {
+    this._address = address;
+    this.events.emit('buyer:changed', { field: 'address' });
   }
 
-  set email(value: string) {
-    this._email = value;
+  setEmail(email: string): void {
+    this._email = email;
+    this.events.emit('buyer:changed', { field: 'email' });
   }
 
-  set phone(value: string) {
-    this._phone = value;
+  setPhone(phone: string): void {
+    this._phone = phone;
+    this.events.emit('buyer:changed', { field: 'phone' });
   }
 
   getBuyerNotis(): IBuyer {

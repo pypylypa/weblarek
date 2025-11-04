@@ -1,13 +1,17 @@
-import { IApi, IProduct, IOrderRequest, IOrderResponse } from '../../types';
+import { IProduct, IOrderRequest, IOrderResponse } from '../../types';
+import { Api } from "./Api";
 
-export class ApiService {
-    constructor(private api: IApi) {}
+export class ApiService extends Api {
+    constructor(baseUrl: string, options: RequestInit = {}) {
+      super(baseUrl, options); // инициализация конструктора родительского класса
+  }
 
-    fetchProducts(): Promise<IProduct> {
-        return this.api.get<IProduct>('/product');
+    async fetchProducts(): Promise<IProduct[]> {
+        const response = await this.get<{ items: IProduct[] }>("/product");
+        return response.items || []; // возвращаем массив товаров
     }
 
-    sendOrder(evt: IOrderRequest): Promise<IOrderResponse> {
-        return this.api.post<IOrderResponse>('/order/', evt);
+    async sendOrder(evt: IOrderRequest): Promise<IOrderResponse> {
+        return await this.post<IOrderResponse>("/order/", evt);
     }
 }

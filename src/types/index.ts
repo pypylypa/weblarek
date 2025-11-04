@@ -34,3 +34,16 @@ export interface IOrderRequest {
     phone: string;
     address: string;
 }
+
+export type IOrder = Omit<IBuyer, "payment"> & {
+  payment: TPayment;
+  items: string[];
+  total: number;
+}
+
+export interface IValidationErrors {
+  payment?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+}
