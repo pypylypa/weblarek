@@ -28,11 +28,9 @@ export interface IOrderResponse {
     total: number;
 }
 
-export interface IOrderRequest {
-    payment: TPayment;
-    email: string;
-    phone: string;
-    address: string;
+export interface IOrderRequest extends IBuyer {
+    total: number;
+    items: string[];
 }
 
 export type IOrder = Omit<IBuyer, "payment"> & {

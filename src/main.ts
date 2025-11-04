@@ -79,9 +79,7 @@ events.on('card:toggle', (product: IProduct) => {
   const inBasket = cart.hasItem(product.id);
   if (!inBasket) {
     cart.addItem(product)
-  } else {
-    cart.removeItem(product.id);
-  }
+  }  
   modal.close();
 })
 
@@ -165,7 +163,6 @@ events.on('contacts:submit', () => {
       if (result) {
         cart.clear();
         buyer.clearBuyerNotis();
-        header.counter = cart.getCount();
         modal.content = success.render();
         orderForm.resetForm();
         contactsForm.resetForm();
